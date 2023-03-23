@@ -14,6 +14,12 @@ from pyspark.sql.functions import date_format, udf
 import sys
 
 def Inicijalizacija():
+    # conf = SparkConf()
+    # conf.setMaster("spark://spark-master:7077")
+    #spark = SparkSession.builder \
+        #.master("local[*]") \
+        #.appName("Projekat") \
+        #.getOrCreate()
     conf = SparkConf()
     conf.setMaster("spark://spark-master:7077")
     conf.set("spark.driver.memory","4g")
@@ -21,7 +27,9 @@ def Inicijalizacija():
     spark = SparkSession.builder.config(conf=conf).appName("Projekat1").getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
     
+    # path = "hdfs://localhost:9000/input/2014-10-"
     path = "hdfs://namenode:9000/podaci/2014-10-"
+    #path = "2014-10/2014-10-"
     n = 3
 
     rdd = spark.sparkContext.textFile(path + "01.txt")
@@ -349,7 +357,7 @@ def izvrsenjeSve(df):
     VratiTraseKojeSeKrecuBrzinom(df, speed=0, long1=long1, long2=long2, lat1=lat1, lat2=lat2, date1=date1, date2=date2).show()
 
     print("Lokacije autobusa čija brzina prelazi 100 Km/h:")
-    VratiTraseKojeSeKrecuIznadBrzine(df, speed=0, long1=long1, long2=long2, lat1=lat1, lat2=lat2, date1=date1, date2=date2).show()
+    VratiTraseKojeSeKrecuIznadBrzine(df, speed=100, long1=long1, long2=long2, lat1=lat1, lat2=lat2, date1=date1, date2=date2).show()
 
 
 if __name__ == '__main__':
