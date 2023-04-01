@@ -1,24 +1,14 @@
 import os
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, from_json, window
-from pyspark import SparkConf
 from pyspark.sql.types import *
-from pyspark.sql import Row
 from pyspark.sql.functions import mean, min, max, col, count, round
-from pyspark.sql.functions import to_date
-from pyspark.sql.functions import to_utc_timestamp, concat, to_timestamp, date_trunc, lit, date_format, udf
-from datetime import datetime
+from pyspark.sql.functions import concat, to_timestamp, lit
 import sys
 
 def Inicijalizacija():
 
-    conf = SparkConf()
-    conf.setMaster("spark://spark-master-x:7077")
-    conf.set("spark.driver.memory","4g")
-    conf.set("spark.cassandra.connection.host", "cassandra")
-    conf.set("spark.cassandra.connection.port", 9042)
-
-    spark = SparkSession.builder.config(conf=conf).appName("Projekat2").getOrCreate()
+    spark = SparkSession.builder.appName("Projekat2").getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
     df = (
         spark.readStream.format("kafka")
