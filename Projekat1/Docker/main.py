@@ -14,11 +14,6 @@ from pyspark.sql.functions import date_format, udf
 import sys
 
 def Inicijalizacija():
-    #conf = SparkConf()
-    #conf.setMaster("spark://spark-master:7077")
-    #conf.set("spark.driver.memory","4g")
-
-    #spark = SparkSession.builder.config(conf=conf).appName("Projekat1").getOrCreate()
     spark = SparkSession.builder.appName("Projekat1").getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
     
