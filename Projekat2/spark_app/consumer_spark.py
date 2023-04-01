@@ -28,11 +28,9 @@ def Inicijalizacija():
             StructField("speed", StringType()),
         ]
     )
-
     parsed_values = df.select(
         "timestamp", from_json(col("value").cast("string"), schema).alias("parsed_values")
     )
-
     df_org = parsed_values.selectExpr("timestamp", "parsed_values.date AS date", "parsed_values.time AS time",
                                             "parsed_values.busID AS busID",
                                             "parsed_values.busLine AS busLine",
