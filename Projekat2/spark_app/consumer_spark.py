@@ -2,14 +2,18 @@ import os
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, from_json, window
 from pyspark.sql.types import *
+from pyspark import SparkConf
 from pyspark.sql.functions import mean, min, max, col, count, round
 from pyspark.sql.functions import concat, to_timestamp, lit
 import sys
 
 def Inicijalizacija():
-
-    spark = SparkSession.builder.appName("Projekat2").getOrCreate()
+    conf = SparkConf()
+    conf.set("spark.cassandra.connection.host", "cassandra")
+    conf.set("spark.cassandra.connection.port", 9042)
+    spark = SparkSession.builder.config(conf=conf).appName("Projekat2").getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
+
     df = (
         spark.readStream.format("kafka")
         .option("kafka.bootstrap.servers", "kafka:9092")
